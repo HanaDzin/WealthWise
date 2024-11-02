@@ -1,6 +1,8 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
+import type { InvestmentInput } from '../investment-input.model';
+
 @Component({
   selector: 'app-user-input',
   standalone: true,
@@ -15,12 +17,7 @@ export class UserInputComponent {
   enteredDuration = '10';
 
   //property to be turned into a custom event (when clicked on button, calculations from app component execute)
-  @Output() calculate = new EventEmitter<{
-    initialInvestment: number;
-    duration: number;
-    expectedReturn: number;
-    annualInvestment: number;
-  }>();
+  @Output() calculate = new EventEmitter<InvestmentInput>();
 
   onSubmit() {
     //call the output property to emit the event that needs to be caught in app component
