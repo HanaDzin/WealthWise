@@ -1,5 +1,5 @@
 import { CurrencyPipe } from '@angular/common';
-import { Component, Input, input } from '@angular/core';
+import { Component, input } from '@angular/core';
 
 @Component({
   selector: 'app-investment-results',
@@ -15,12 +15,14 @@ export class InvestmentResultsComponent {
   //if working with signals: results = input<type>()
   // ? --> optional property (might also be undefined), ! --> always will be the defined in the declared shape
 
-  @Input() results?: {
-    year: number;
-    interest: number;
-    valueEndOfYear: number;
-    annualInvestment: number;
-    totalInterest: number;
-    totalAmountInvested: number;
-  }[]; //array of such objects
+  results = input<
+    {
+      year: number;
+      interest: number;
+      valueEndOfYear: number;
+      annualInvestment: number;
+      totalInterest: number;
+      totalAmountInvested: number;
+    }[]
+  >(); //array of such objects
 }

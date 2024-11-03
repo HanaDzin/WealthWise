@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { HeaderComponent } from './header/header.component';
 import { UserInputComponent } from './user-input/user-input.component';
 import { InvestmentInput } from './investment-input.model';
@@ -13,14 +13,19 @@ import { InvestmentResultsComponent } from './investment-results/investment-resu
 export class AppComponent {
   //storing the calculated data as a property so it can be available in the template
   //& used as a value for property binding in the investment results component
-  resultsData?: {
-    year: number;
-    interest: number;
-    valueEndOfYear: number;
-    annualInvestment: number;
-    totalInterest: number;
-    totalAmountInvested: number;
-  }[];
+
+  //now using signals
+  resultsData = signal<
+    | {
+        year: number;
+        interest: number;
+        valueEndOfYear: number;
+        annualInvestment: number;
+        totalInterest: number;
+        totalAmountInvested: number;
+      }[]
+    | undefined
+  >(undefined);
 
   calculateInvestmentResults(data: InvestmentInput) {
     //destructure the incoming data into vars used in calculations
@@ -46,6 +51,6 @@ export class AppComponent {
       });
     }
 
-    this.resultsData = annualData;
+    this.resultsData.set(annualData);
   }
 }

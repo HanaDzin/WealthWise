@@ -1,4 +1,6 @@
 <app-header />
 <!--when the calculate event happens (in user input), code from app component is executed-->
 <app-user-input (calculate)="calculateInvestmentResults($event)" />
-<app-investment-results [results]="resultsData" />
+
+<!--read the signal data using () -->
+<app-investment-results [results]="resultsData()" />
