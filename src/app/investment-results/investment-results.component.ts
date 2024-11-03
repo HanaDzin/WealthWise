@@ -1,5 +1,6 @@
 import { CurrencyPipe } from '@angular/common';
-import { Component, input } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { InvestmentService } from '../investment.service';
 
 @Component({
   selector: 'app-investment-results',
@@ -9,20 +10,11 @@ import { Component, input } from '@angular/core';
   styleUrl: './investment-results.component.css',
 })
 export class InvestmentResultsComponent {
-  // bindable property that is exposed from this to parent component
-  // so that the parent component can pass data into this component
+  //another way of using the service:
+  private investmentService = inject(InvestmentService);
 
-  //if working with signals: results = input<type>()
-  // ? --> optional property (might also be undefined), ! --> always will be the defined in the declared shape
-
-  results = input<
-    {
-      year: number;
-      interest: number;
-      valueEndOfYear: number;
-      annualInvestment: number;
-      totalInterest: number;
-      totalAmountInvested: number;
-    }[]
-  >(); //array of such objects
+  //to expose the results to the template
+  get results() {
+    return this.investmentService.resultsData;
+  }
 }

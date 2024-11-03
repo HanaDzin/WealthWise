@@ -1,7 +1,6 @@
-import { Component, signal, output } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-
-import type { InvestmentInput } from '../investment-input.model';
+import { InvestmentService } from '../investment.service';
 
 @Component({
   selector: 'app-user-input',
@@ -16,15 +15,13 @@ export class UserInputComponent {
   enteredExpectedReturn = signal('5');
   enteredDuration = signal('10');
 
-  //property to be turned into a custom event (when clicked on button, calculations from app component execute)
-  calculate = output<InvestmentInput>();
+  //make service available (inject it)
+  //by adding visibility, a new property is automatically created which holds a service instance
+  constructor(private investmentService: InvestmentService) {}
 
   onSubmit() {
-    //call the output property to emit the event that needs to be caught in app component
-    //taking into consideration that strings need to be converted to numbers - using the + symbol
-
-    //when working with signals, we should read them by adding ()
-    this.calculate.emit({
+    //instead of using output, reach out to the service when submitting the form
+    this.investmentService.calculateInvestmentResults({
       initialInvestment: +this.enteredInitialInvestment(),
       duration: +this.enteredDuration(),
       expectedReturn: +this.enteredExpectedReturn(),
